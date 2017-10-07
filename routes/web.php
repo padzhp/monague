@@ -11,8 +11,14 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+Route::group(['middleware' => 'App\Http\Middleware\AdminAuthenticate'], function () {
+
+	Route::get('/dashboard/index', 'Dashboard\DashboardController@index');
+	Route::get('/dashboard/orders', 'Dashboard\OrderController@index');
+
 });
 
+Route::get('/dashboard/', 'Dashboard\DashboardController@login');
+Auth::routes();
 
+Route::get('/home', 'HomeController@index')->name('home');

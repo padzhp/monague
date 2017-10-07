@@ -405,6 +405,7 @@
         },
         {
             "name": "laravel/framework",
+
             "version": "v5.5.14",
             "source": {
                 "type": "git",
