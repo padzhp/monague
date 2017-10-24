@@ -1,4 +1,4 @@
-@import url(https://fonts.googleapis.com/css?family=Raleway:300,400,600);@charset "UTF-8";
+@import url(https://fonts.googleapis.com/css?family=Roboto:300,400,600);@charset "UTF-8";
 /*!
  * Bootstrap v3.3.7 (http://getbootstrap.com)
  * Copyright 2011-2016 Twitter, Inc.
@@ -300,8 +300,8 @@ th {
 
 @font-face {
   font-family: 'Glyphicons Halflings';
-  src: url("../public/fonts/glyphicons-halflings-regular.eot");
-  src: url("../public/fonts/glyphicons-halflings-regular.eot?#iefix") format("embedded-opentype"), url("../public/fonts/glyphicons-halflings-regular.woff2") format("woff2"), url("../public/fonts/glyphicons-halflings-regular.woff") format("woff"), url("../public/fonts/glyphicons-halflings-regular.ttf") format("truetype"), url("../public/fonts/glyphicons-halflings-regular.svg#glyphicons_halflingsregular") format("svg");
+  src: url("../fonts/glyphicons-halflings-regular.eot");
+  src: url("../fonts/glyphicons-halflings-regular.eot?#iefix") format("embedded-opentype"), url("../fonts/glyphicons-halflings-regular.woff2") format("woff2"), url("../fonts/glyphicons-halflings-regular.woff") format("woff"), url("../fonts/glyphicons-halflings-regular.ttf") format("truetype"), url("../fonts/glyphicons-halflings-regular.svg#glyphicons_halflingsregular") format("svg");
 }
 
 .glyphicon {
@@ -1382,7 +1382,7 @@ html {
 }
 
 body {
-  font-family: "Raleway", sans-serif;
+  font-family: "Roboto", sans-serif;
   font-size: 14px;
   line-height: 1.6;
   color: #636b6f;
@@ -6899,7 +6899,7 @@ button.close {
   position: absolute;
   z-index: 1070;
   display: block;
-  font-family: "Raleway", sans-serif;
+  font-family: "Roboto", sans-serif;
   font-style: normal;
   font-weight: normal;
   letter-spacing: normal;
@@ -7033,7 +7033,7 @@ button.close {
   display: none;
   max-width: 276px;
   padding: 1px;
-  font-family: "Raleway", sans-serif;
+  font-family: "Roboto", sans-serif;
   font-style: normal;
   font-weight: normal;
   letter-spacing: normal;
@@ -7751,7 +7751,7 @@ body {
 @media (min-width: 768px) {
   #page-wrapper {
     position: inherit;
-    margin-left: 200px;
+    margin-left: 185px;
     padding: 30px 30px 0 30px;
     border-left: 1px solid #e7e7e7;
   }
@@ -7967,7 +7967,7 @@ footer {
   .sidebar {
     z-index: 1;
     position: absolute;
-    width: 200px;
+    width: 185px;
     margin-top: 64px;
   }
   .navbar-top-links .dropdown-messages,
@@ -8536,39 +8536,4 @@ table.dataTable thead .sorting:after {
   /* active text color */
   background-color: #a94442;
   /* active bg color */
-}
-
-.mnc-icon {
-  width: 20px;
-  height: 20px;
-  color: #FFF;
-  display: inline-block;
-  margin-right: 8px;
-  margin-top: 12px;
-  float: left;
-}
-
-.mnc-admins {
-  background: url("../images/icon-admin.svg") no-repeat;
-}
-
-.mnc-dashboard {
-  background: url("../images/icon-dashboards.svg") no-repeat;
-}
-
-.mnc-products {
-  background: url("../images/icon-products.svg") no-repeat;
-  margin-top: 13px;
-}
-
-.mnc-orders {
-  background: url("../images/icon-orders.svg") no-repeat;
-}
-
-.mnc-customers {
-  background: url("../images/icon-customers.svg") no-repeat;
-}
-
-.mnc-categories {
-  background: url("../images/icon-categories.svg") no-repeat;
 }

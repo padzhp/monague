@@ -15,7 +15,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'name', 'email', 'password', 'unhashed'
     ];
 
     /**
@@ -25,5 +25,23 @@ class User extends Authenticatable
      */
     protected $hidden = [
         'password', 'remember_token',
-    ];
+    ];  
+
+
+    public function customer()
+    {
+        return $this->hasOne('App\Customer','user_id');
+    }
+
+    public function getCustomerInfo($user){
+        $customer = new \stdClass();
+
+        $customer = $user->customer;
+        $customer->name = $user->name;
+        $customer->email = $user->email;
+        $customer->password = $user->unhashed;
+
+        return $customer;
+    }
+
 }

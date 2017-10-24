@@ -8,7 +8,7 @@
                             <!-- /.panel-heading -->
                             <div class="panel-body">
                                 <div class="dataTable_wrapper">
-                                    <table class="table table-striped table-panel table-hover" id="dataTables-example">
+                                    <table class="table table-striped table-panel table-hover" id="datatable-orders">
                                         <thead>
                                             <tr>
                                                 <th>Date</th>
@@ -20,30 +20,7 @@
 												<th>Payment Type</th>
 												<th>Status</th>
                                             </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr class="">
-                                                <td>09-11-2017</td>
-                                                <td>1178</td>
-                                                <td>US</td>
-												<td>OK Gift Shop</td>
-												<td>Tateko Takahashi</td>
-                                                <td class="right">908.59</td>
-												<td>ON MY ACCOUNT</td>
-												<td>Pending</td>
-                                            </tr>
-                                            <tr class="">
-                                                <td>09-11-2017</td>
-                                                <td>1179</td>
-                                                <td>CAD</td>
-												<td>Warcraft Store</td>
-												<td>Tateko Takahashi</td>
-                                                <td class="right">1,345.80</td>
-												<td>APPLY FOR NET30</td>
-												<td>Confirmed</td>
-                                            </tr>
-                                            
-                                        </tbody>
+                                        </thead>                                        
                                     </table>
                                 </div>
                             </div>
@@ -51,19 +28,15 @@
                         </div>
                         <!-- /.panel -->
                   
-				 </div>
-                 
+				     </div>
+                    
+                    <div class="pagination-container">
+                    </div>
                  
                 </div>
 
 @stop
 
 @section('footer-scripts')
-		<script>
-            $(document).ready(function() {
-                $('#dataTables-example').DataTable({
-                        responsive: true
-                });
-            });
-        </script>
+		<script language="javascript" type="text/javascript" src="{{asset('js/dashboard/orders.js')}}"></script>        
 @stop

@@ -2,7 +2,7 @@
 
 namespace App\Http\Middleware;
 
-use App\Dashboard_user;
+use App\User;
 use Closure;
 use Illuminate\Support\Facades\Auth;
 
@@ -21,7 +21,7 @@ class AdminAuthenticate
             if ($request->ajax() || $request->wantsJson()) {
                 return response('Unauthorized.', 401);
             } else {
-                return redirect()->guest('login');
+                return redirect()->guest('dashboard/login');
             }
         }
 
@@ -37,13 +37,12 @@ class AdminAuthenticate
         return $next($request);
     }
 
-    public function hasAccess(Dashboard_user $user)
-    {
-        $job = strtolower($user->job);
+    public function hasAccess(User $user)    {
+        
         $role = strtolower($user->role);
         // at the moment this class is created, only waiter has some restrictions
         // this condition needs to be modified to check for permissions
-        if ($role == '' || $role == 'admin' || ($role == 'staff' && $job != 'waiter')) {
+        if ($role == 'admin') {
             return true;
         }
 

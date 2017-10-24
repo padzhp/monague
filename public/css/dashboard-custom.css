@@ -1,0 +1,264 @@
+html body {
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif !important;
+}
+
+.sidebar-profile{
+  height: 180px;
+  padding: 30px 35px 20px;
+  text-align: center;
+  display: inline-block;
+}
+
+.sidebar-profile .profile-picture img{
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  border: 4px solid #FFF;
+  margin-bottom: 10px;
+}
+
+.sidebar-profile .profile-details {
+  line-height: 18px;
+  display: inline-block;
+}
+
+.login-logo{
+    background: url(../images/mnc-admin-logo.svg) no-repeat center;
+    width: 230px;
+    margin: 30px auto 0px; 
+    height: 35px; 
+}
+
+.login-panel .panel-body{
+    padding: 15px 40px 40px; 
+}
+
+.panel{
+  border-radius: 10px !important;
+}
+
+/* MODAL CUSTOM */
+
+.modal-md{
+  width: 400px;
+}
+
+.modal-custom .modal-header{
+  border-bottom: none;
+  padding-top: 20px;
+  padding-bottom: 0;
+}
+
+.modal-content.modal-custom{
+  padding: 0 5px;
+}
+
+.modal-custom button.close{
+  opacity: 1;
+  margin-top: -12px;  
+}
+
+
+table.dataTable thead .sorting:after{
+  float: none;
+  margin-left: 10px;
+}
+
+html body .table-hover > tbody > tr:hover {
+  background-color: #00aec4;
+}
+
+html body table.dataTable thead > tr > th{
+  padding-left: 8px;
+  text-transform: uppercase;
+}
+
+.subtable-wrapper{
+  padding: 0 20px;
+}
+
+.subtable{
+  width: 100%;  
+}
+
+.subtable td{
+  padding: 5px;
+}
+
+.action-buttons-container{
+  text-align: right;
+  margin-bottom: 20px;
+}
+
+.action-buttons-container > .btn{
+  margin-left: 10px;
+}
+
+.btn-green{
+  background-color: #58b957;
+}
+
+.btn-brown{
+  background-color: #412b15;
+}
+
+.btn-red{
+  background-color: #ff0000;
+}
+
+.btn-blue{
+  background-color: #00aec4;
+}
+
+.btn-yellow{
+  background-color: #f2ae43;
+  border-color: #f2ae43;
+}
+
+.btn-yellow:hover{
+  background-color: #f2ae42;
+  border-color: #f2ae43;
+}
+
+.btn-block{
+  display: block;
+  width: 100%;
+}
+
+.btn-fixed-width{
+  width: 105px;
+  padding: 0;
+  height: 55px;
+  border-color: #307dbf;
+  color: #FFF;
+  line-height: 14px;
+  font-size: 14px;
+}
+
+a.btn-fixed-width.btn-txt-lg{
+  line-height: 50px !important;
+}
+
+.btn-txt-lg{
+  font-size: 1.2em !important;
+}
+
+
+
+.mnc-icon{
+  width: 20px;
+  height: 20px;
+  color: #FFF;
+  display: inline-block;
+  margin-right: 8px;
+  margin-top: 12px;
+  float:left;
+}
+
+.mnc-admins{
+  background: url("../images/icon-admin.svg") no-repeat;
+}
+
+.mnc-dashboard{
+  background: url("../images/icon-dashboards.svg") no-repeat;
+}
+
+.mnc-products{
+  background: url("../images/icon-products.svg") no-repeat;
+  margin-top: 13px;
+}
+
+.mnc-orders{
+  background: url("../images/icon-orders.svg") no-repeat;
+}
+
+.mnc-customers{
+  background: url("../images/icon-customers.svg") no-repeat;
+}
+
+.mnc-categories{
+  background: url("../images/icon-categories.svg") no-repeat;
+}
+
+.mnc-pages{
+  background: url("../images/icon-edit-pages.svg") no-repeat;
+}
+
+.marginright-20{
+    margin-right: 20px !important;
+}
+
+.marginleft-20{
+    margin-left: 20px !important;
+}
+
+.margintop-20{
+    margin-top: 20px !important;
+}
+
+.marginbottom-20{
+    margin-bottom: 20px !important;
+}
+
+.marginright-10{
+    margin-right: 10px !important;
+}
+
+.marginleft-10{
+    margin-left: 10px !important;
+}
+
+.margintop-10{
+    margin-top: 10px !important;
+}
+
+.marginbottom-10{
+    margin-bottom: 10px !important;
+}
+
+.marginright-5{
+    margin-right: 5px !important;
+}
+
+.marginleft-5{
+    margin-left: 5px !important;
+}
+
+.margintop-5{
+    margin-top: 5px !important;
+}
+
+.marginbottom-5{
+    margin-bottom: 5px !important;
+}
+
+.margintop-8{
+    margin-top: 8px !important;
+}
+
+.notbold{
+    font-weight: normal !important;
+}
+
+/* OVERRIDES */
+.form-control.input-autosize{
+    display: inline-block;
+    width: auto !important;    
+}
+
+html body .table-hover > tbody > tr.subtable-row:hover {
+  background-color: transparent !important;
+}
+
+html body .btn-fixed-width{
+  border-radius: 6px;
+}
+
+html body .btn-sm{
+  border-radius: 5px;
+  color: #FFF;
+}
+
+html body table.dataTable{
+  margin-bottom: 0 !important;
+}

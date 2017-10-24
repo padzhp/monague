@@ -1,6 +1,6 @@
 
 // Fonts
-@import url("https://fonts.googleapis.com/css?family=Raleway:300,400,600");
+@import url("https://fonts.googleapis.com/css?family=Roboto:300,400,600");
 
 // Variables
 @import "variables";
@@ -43,7 +43,7 @@ body {
 @media(min-width:768px) {
     #page-wrapper {
         position: inherit;
-        margin-left: 200px;
+        margin-left: 185px;
         padding: 30px 30px 0 30px;
         border-left: 1px solid #e7e7e7;
     }
@@ -254,7 +254,7 @@ footer{
     .sidebar {
         z-index: 1;
         position: absolute;
-        width: 200px;
+        width: 185px;
         margin-top: 64px;
     }
 
@@ -770,39 +770,4 @@ table.dataTable thead .sorting:after {
 .tabbed-panel.panel-danger .nav-tabs > li.dropdown .dropdown-menu > .active > a:focus {
     color: #fff; /* active text color */
     background-color: #a94442; /* active bg color */
-}
-
-.mnc-icon{
-	width: 20px;
-	height: 20px;
-	color: #FFF;
-	display: inline-block;
-	margin-right: 8px;
-	margin-top: 12px;
-	float:left;
-}
-
-.mnc-admins{
-	background: url("../images/icon-admin.svg") no-repeat;
-}
-
-.mnc-dashboard{
-	background: url("../images/icon-dashboards.svg") no-repeat;
-}
-
-.mnc-products{
-	background: url("../images/icon-products.svg") no-repeat;
-	margin-top: 13px;
-}
-
-.mnc-orders{
-	background: url("../images/icon-orders.svg") no-repeat;
-}
-
-.mnc-customers{
-	background: url("../images/icon-customers.svg") no-repeat;
-}
-
-.mnc-categories{
-	background: url("../images/icon-categories.svg") no-repeat;
 }

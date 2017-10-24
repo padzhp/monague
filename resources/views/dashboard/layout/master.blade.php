@@ -6,29 +6,31 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="author" content="">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <title>Startmin - Bootstrap Admin Theme</title>
     
     <!-- MetisMenu CSS -->
-    <link href="css/metisMenu.min.css" rel="stylesheet">
+    <link href="{{asset('css/metisMenu.min.css')}}" rel="stylesheet">
 
     <!-- Timeline CSS -->
-    <link href="css/timeline.css" rel="stylesheet">
+    <link href="{{asset('css/timeline.css')}}" rel="stylesheet">
 
     <!-- Custom CSS -->
     <link href="{{asset('css/dashboard.css')}}" rel="stylesheet">
+    <link href="{{asset('css/dashboard-custom.css')}}" rel="stylesheet">
 
     <!-- Morris Charts CSS -->
-    <link href="css/morris.css" rel="stylesheet">
+    <link href="{{asset('css/morris.css')}}" rel="stylesheet">
 	
 	 <!-- DataTables CSS -->
-	<link href="../css/dataTables/dataTables.bootstrap.css" rel="stylesheet">
+	<link href="{{asset('css/dataTables/dataTables.bootstrap.css')}}" rel="stylesheet">
 
 	<!-- DataTables Responsive CSS -->
-	<link href="../css/dataTables/dataTables.responsive.css" rel="stylesheet">
+	<link href="{{asset('css/dataTables/dataTables.responsive.css')}}" rel="stylesheet">
 
     <!-- Custom Fonts -->
-    <link href="css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="{{asset('css/font-awesome.min.css')}}" rel="stylesheet" type="text/css">
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -57,9 +59,13 @@
         <!-- Top Navigation: Right Menu -->
         <ul class="nav navbar-right navbar-top-links">
             <li class="dropdown navbar-inverse">
-                <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                <a class="dropdown-toggle" data-toggle="dropdown" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                     Logout
-                </a>                
+                </a>              
+
+                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                    {{ csrf_field() }}
+                </form>                
             </li>            
         </ul>
 
@@ -90,16 +96,34 @@
 	
 	<footer class="footer">
 		<div>HELLO WORLD</div>
+         <div id="confirm" class="modal fade" role="dialog">
+          <div class="modal-dialog  modal-sm">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+             
+              <div class="modal-body">
+                <p>Some text in the modal.</p>
+              </div>
+              <div class="modal-footer">
+                <button type="button" data-dismiss="modal" class="btn btn-primary" id="delete">Delete</button>
+                <button type="button" data-dismiss="modal" class="btn">Cancel</button>
+              </div>
+            </div>
+
+          </div>
+        </div>
 	</footer>
 
 </div>
 
 <!-- Custom Theme JavaScript -->
 <script src="{{asset('js/dashboard.js')}}"></script>
-<script src="js/metisMenu.min.js"></script>
+<script src="{{asset('js/metisMenu.min.js')}}"></script>
 <!-- DataTables JavaScript -->
-<script src="../js/dataTables/jquery.dataTables.min.js"></script>
-<script src="../js/dataTables/dataTables.bootstrap.min.js"></script>
+<script src="{{asset('js/dataTables/jquery.dataTables.min.js')}}"></script>
+<script src="{{asset('js/dataTables/dataTables.bootstrap.min.js')}}"></script>
+<script src="{{asset('js/dashboard-custom.js')}}"></script>
 
 @yield('footer-scripts')
 
