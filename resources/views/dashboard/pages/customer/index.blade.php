@@ -8,7 +8,7 @@
                         @endif
 						<div class="panel panel-monague">
                             <div class="panel-heading">
-                                RECENT ORDERS
+                                CUSTOMERS
                             </div>
                             <!-- /.panel-heading -->
                             <div class="panel-body">
@@ -18,12 +18,8 @@
                                         <input type="text" class="form-control input-sm input-autosize" name="filter-search">                                       
                                     </div>
                                     <div class="col-xs-5 col-sm-5 col-md-5 text-right">
-                                        <div class="col-xs-6 col-sm-4 col-md-4 pull-right">
-                                            <select class="form-control input-sm" name="filter-country">
-                                                <option value="CA">CANADA</option>
-                                                <option value="US">USA</option>
-                                                <option value="ALL" selected="selected">ALL</option>
-                                            </select>   
+                                        <div class="col-xs-6 col-sm-4 col-md-4 pull-right">                                            
+                                            {!! Form::select('filter-country', $lists['countries'], null, ['class' => 'form-control  input-sm']) !!}  
                                         </div> 
                                     </div>
                                     <div class="clearfix"></div>
@@ -47,18 +43,14 @@
                         </div>
                         <!-- /.panel -->
                   
-				 </div>
+				 
                  <div class="action-buttons-container">
-                    <button type="button" class="btn btn-fixed-width btn-green">ADD NEW<br />CUSTOMER</button>
+                    <a role="button" href="{{ url('dashboard/customers/create') }}"" class="btn btn-fixed-width btn-two-lines-text btn-green">ADD NEW<br />CUSTOMER</a>
                     <button type="button" class="btn-confirm-delete btn btn-fixed-width btn-txt-lg btn-red">DELETE</button>
                     <button type="button" class="btn btn-fixed-width btn-brown">EXPORT<br />CSV</button>
                  </div>
                  <div class="pagination-container">
                  </div>
-
-
-                 
-                </div>
 
 
                 
@@ -67,4 +59,7 @@
 
 @section('footer-scripts')
 		<script language="javascript" type="text/javascript" src="{{asset('js/dashboard/customers.js')}}"></script>
+        <script language="javascript" type="text/javascript">
+            window.dashboard.customers.init();
+        </script>
 @stop

@@ -14,7 +14,7 @@ use App\Country;
 use App\Customer;
 use DB;
 
-class CustomerController extends BaseController
+class AdminController extends BaseController
 {
 	use ReturnsDatatable;
 	protected $connection = 'mysql';    
@@ -24,7 +24,7 @@ class CustomerController extends BaseController
 
          $lists['countries'] = $this->getCountriesList('ALL');
 
-		return view('dashboard.pages.customer.index', compact('lists'));
+		return view('dashboard.pages.admin.index', compact('lists'));
 	}
 
 	public function datatable(Request $request)
@@ -41,21 +41,16 @@ class CustomerController extends BaseController
         $request = request();
         $search = $request->search;        
 
-        $query = User::join('countries', 'countries.id', '=', 'users.country_id')
-                ->join('customers', 'users.id', '=', 'customers.user_id')
-        		->where('role','=','customer')
-                ->where('status','>=',0);
+        $query = User::where('status','>=',0)
+        		->where('role','=','admin');
 
         if (!is_array($search) && trim($search) != '') {
             $query->where(function($q) use ($search) {
-                $q->where('users.name', 'LIKE', '%'.$search.'%');
-                $q->orWhere('customers.company', 'LIKE', '%'.$search.'%');
+                $q->where('users.username', 'LIKE', '%'.$search.'%');
+                $q->orWhere('users.email', 'LIKE', '%'.$search.'%');
+                $q->orWhere('users.name', 'LIKE', '%'.$search.'%');
             });           
-        }
-
-        if($request->country != ""){
-           $query->where('users.country_id', '=', $request->country); 
-        }
+        }       
         
         return $query;
     }
@@ -63,20 +58,18 @@ class CustomerController extends BaseController
     public function dtSort()
     {
         $request = request();
-        $sort_by = 'users.created_at';
+        $sort_by = 'users.name';
         $sort_order = 'ASC';
 
         if (isset($request->order[0])) {
             $sortable = [                
-                'users.created_at',
-                'countries.country',
-                'customers.company',
-                'users.name',                
+                'users.username',
+                'users.name',
                 'users.email',
-                'users.created_at',
+                'users.last_login',                
             ];
             $col = $request->order[0]['column'];
-            $sort_by = isset($sortable[$col]) ? $sortable[$col] : 'created_at';
+            $sort_by = isset($sortable[$col]) ? $sortable[$col] : 'users.name';
             $sort_order = $request->order[0]['dir'];
         }
 
@@ -90,13 +83,13 @@ class CustomerController extends BaseController
     {
     
         return [
-            'DT_RowId' => $user->user_id,
-            'id' => $user->user_id,           
-            'country' => $user->country,
-            'created_at' => $user->created_at->format('m-d-Y'),
-            'contact' => $user->name,
-            'company' => $user->company,
-            'email' => $user->email,            
+        	'DT_RowId' => $user->id,
+            'id' => $user->id,           
+            'username' => $user->username,
+            'last_login' => $user->last_login ? $user->last_login->format('m-d-Y') : '--',
+            'name' => $user->name,
+            'email' => $user->email,
+
         ];
     }
 
@@ -107,18 +100,17 @@ class CustomerController extends BaseController
 
     public function create(){
         $lists['countries'] = $this->getCountriesList();
-    	return view('dashboard.pages.customer.create', compact('lists'));
+    	return view('dashboard.pages.admin.create', compact('lists'));
     }
 
     public function edit($id){
 
-        $user = User::with("customer")->findOrFail($id);
-        
-        $customer = $user->getCustomerInfo($user);
-        
+        $admin = User::findOrFail($id);
+        $admin->password = $admin->unhashed;
+                        
         $lists['countries'] = $this->getCountriesList();
 
-    	return view('dashboard.pages.customer.edit', compact('customer','lists'));
+    	return view('dashboard.pages.admin.edit', compact('admin','lists'));
     }
 
     public function store(Request $request){
@@ -126,18 +118,18 @@ class CustomerController extends BaseController
         $data = $request->all();
         $data['unhashed'] = $data['password'];
         $data['password'] = bcrypt($data['password']);
-        $data['role']  = 'customer';
+        $data['role']  = 'admin';
         $data['subscribed']  = 0;
-        $data['country_id']  =  $data['billing_country'];
+        $data['country_id']  =  0;
 
         //dd($data);
 
-        $this->saveCustomer($data, 0);
+        $this->saveAdmin($data, 0);
 
         return response()->json([
             'status'=>'success',
-            'messages'=>['New customer added successfully'],
-            'returnurl'=>'/dashboard/customers',
+            'messages'=>['New admin added successfully'],
+            'returnurl'=>'/dashboard/admins',
         ]);
 
     }
@@ -145,68 +137,54 @@ class CustomerController extends BaseController
     public function update(Request $request, $id){
 
         $data = $request->except(['_token']);
-        $this->saveCustomer($data, $id);
+
+        $data['unhashed'] = $data['password'];
+        $data['password'] = bcrypt($data['password']);
+
+        $this->saveAdmin($data, $id);
 
          return response()->json([
             'status'=>'success',
-            'messages'=>['Customer information updated successfully'],
-            'returnurl'=>'/dashboard/customers',
+            'messages'=>['Admin information updated successfully'],
+            'returnurl'=>'/dashboard/admins',
         ]);
 
     }
 
     public function delete(Request $request){
-        
-        $ids = $request->ids;
+        $id = $request->id;
         $data['status'] = -2;
-
-        if(is_array($ids)){
-
-            User::whereIn('id',$ids)                      
-            ->update(['status' => -2]);
-
-        } else {
-            $ids = $request->id;
-            $user = User::find($ids);
-            $user->update($data);
-        }
+        $updated = $this->saveAdmin($data, $id);
 
         return response()->json([
             'status'=>'success',
-            'messages'=>['Customer has been deleted'],
-            'returnurl'=>'/dashboard/customers',
+            'messages'=>['Admin has been deleted'],
+            'returnurl'=>'/dashboard/admins',
         ]);
     }
 
 
     public function activate(Request $request){
         $id = $request->id;
-        $data['status'] = $request->status;
+        $data['status'] = 1;
         
-        $status = $data['status'] ? 'activated' : 'deactivated';
-
         $user = User::find($id);
         $user->update($data);
 
         return response()->json([
             'status'=>'success',
-            'messages'=>['Customer has been '.$status],
-            'returnurl'=>'/dashboard/customers',
+            'messages'=>['Admin has been activated'],
+            'returnurl'=>'/dashboard/admins',
         ]);
     }
 
-    public function saveCustomer($data, $id=0){
+    public function saveAdmin($data, $id=0){
 
         if($id == 0){
-            $user = User::create($data);
-            $customer = new Customer($data);
-            $customer->user_id = $user->id;
-            $customer->save();
+            $user = User::create($data);            
         } else {
             $user = User::find($id);
-            $user->update($data);
-            $customer = Customer::where('user_id','=',$id)->first();
-            $customer->update($data);
+            $user->update($data);           
         }
 
         return $user;

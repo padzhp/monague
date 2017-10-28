@@ -59,7 +59,7 @@
         <!-- Top Navigation: Right Menu -->
         <ul class="nav navbar-right navbar-top-links">
             <li class="dropdown navbar-inverse">
-                <a class="dropdown-toggle" data-toggle="dropdown" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                <a class="btn btn-yellow href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                     Logout
                 </a>              
 
@@ -67,35 +67,34 @@
                     {{ csrf_field() }}
                 </form>                
             </li>            
-        </ul>
-
-        <!-- Sidebar -->
-        <div class="navbar-custom sidebar" role="navigation">
-            <div class="sidebar-nav navbar-collapse">
-
-                @include('dashboard.layout.menu')
-
-            </div>
-        </div>
+        </ul>        
     </nav>
 
     <!-- Page Content -->
-    <div id="page-wrapper">
-        <div class="container-fluid">
-
-            <div class="row">
-                <div class="col-lg-12">
-                    @yield('content')
-                </div>
+    <div class="body-wrapper">
+        <!-- Sidebar -->
+        <div class="navbar-custom sidebar" role="navigation">         
+            <div class="sidebar-nav navbar-collapse">
+                @include('dashboard.layout.menu')
             </div>
 
-            <!-- ... Your content goes here ... -->
-
         </div>
+        <div id="page-wrapper">                   
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-lg-12">
+                        @yield('content')
+                    </div>
+                </div>
+            </div>
+        </div>
+    	
+    	
     </div>
-	
-	<footer class="footer">
-		<div>HELLO WORLD</div>
+    <div class="clearfix"></div>
+
+    <footer class="footer">
+        <div>HELLO WORLD</div>
          <div id="confirm" class="modal fade" role="dialog">
           <div class="modal-dialog  modal-sm">
 
@@ -113,7 +112,7 @@
 
           </div>
         </div>
-	</footer>
+    </footer>
 
 </div>
 

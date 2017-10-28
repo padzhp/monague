@@ -15,7 +15,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password', 'unhashed'
+        'name', 'email', 'password', 'unhashed','country_id','subscribed','status','role','username'
     ];
 
     /**
@@ -25,7 +25,9 @@ class User extends Authenticatable
      */
     protected $hidden = [
         'password', 'remember_token',
-    ];  
+    ];
+
+    protected $connection = "mysql";  
 
 
     public function customer()
@@ -40,8 +42,15 @@ class User extends Authenticatable
         $customer->name = $user->name;
         $customer->email = $user->email;
         $customer->password = $user->unhashed;
+        $customer->status = $user->status;
 
         return $customer;
     }
+
+    public function country()
+    {
+        return $this->hasOne('App\Country','country');
+    }
+
 
 }

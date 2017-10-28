@@ -2,6 +2,18 @@ html body {
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif !important;
 }
 
+html body .navbar-custom.sidebar{
+  position: relative;
+  float: left;
+  background-color: #00aec4;
+}
+
+#page-wrapper{
+  width: calc(100% - 185px);
+  float: left;
+  margin-left: 0 !important;
+}
+
 .sidebar-profile{
   height: 180px;
   padding: 30px 35px 20px;
@@ -139,6 +151,11 @@ a.btn-fixed-width.btn-txt-lg{
   line-height: 50px !important;
 }
 
+a.btn-fixed-width.btn-two-lines-text{
+      line-height: 14px !important;
+    padding-top: 12px;
+}
+
 .btn-txt-lg{
   font-size: 1.2em !important;
 }
@@ -239,6 +256,19 @@ a.btn-fixed-width.btn-txt-lg{
 .notbold{
     font-weight: normal !important;
 }
+
+/* FORM VALIDATION */
+.form-control.error{
+  border-color: red;
+}
+
+label.error{
+  color: red;
+  font-weight: normal;
+  font-size: 12px;
+  margin-left: 10px;
+}
+
 
 /* OVERRIDES */
 .form-control.input-autosize{

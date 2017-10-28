@@ -8,6 +8,7 @@ class Customer extends Model
 {
     //
     public $timestamps = false;
+    protected $connection = "mysql";
     
     protected $fillable = [
         'company', 'user_id', 'billing_street', 'billing_city', 'billing_zip',

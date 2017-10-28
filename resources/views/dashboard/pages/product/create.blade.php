@@ -1,5 +1,6 @@
 @extends('dashboard.layout.master')
 @section('content')
+                    {!! Form::open(array('route' => 'products.store','method'=>'POST','id'=>'form-submit')) !!}  
 					<div class="wrapper">
 						<div class="panel panel-monague">
                             <div class="panel-heading">
@@ -8,9 +9,9 @@
                             <!-- /.panel-heading -->
                             <div class="panel-body">
 
-                                {!! Form::open(array('route' => 'products.store','method'=>'POST')) !!}         
+                                       
                                     @include('dashboard.pages.product.form')
-                                {!! Form::close() !!}
+                                
 
                             </div>
                             <!-- /.panel-body -->
@@ -20,10 +21,11 @@
 				 </div>
 
                  <div class="action-buttons-container">
-                    <button type="button" class="btn-save btn btn-fixed-width btn-txt-lg btn-blue">SAVE</button>
-                    <button type="button" class="btn-close btn btn-fixed-width btn-txt-lg btn-yellow">CLOSE</button>
-                 
-                 </div>                 
+                    <button type="button" id="btn-submit" class="btn-save btn btn-fixed-width btn-txt-lg btn-blue">SAVE</button>
+                    <button type="button" class="btn-close btn btn-fixed-width btn-txt-lg btn-yellow">CLOSE</button>                 
+                 </div>
+
+                 {!! Form::close() !!}                 
                  
                 
 

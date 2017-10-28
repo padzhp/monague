@@ -7,3 +7,9 @@
 require('./bootstrap');
 
 window.Vue = require('vue');
+
+require('jquery-validation');
+
+//import VeeValidate from 'vee-validate';
+
+//Vue.use(VeeValidate);

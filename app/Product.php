@@ -15,4 +15,6 @@ class Product extends Model
     	'us_enabled', 'us_price', 'us_published', 'us_sku',
     	'us_six_plus', 'us_six_pack', 'us_dozen_pack'
     ];
+
+    protected $connection = "mysql";
 }

@@ -82,9 +82,10 @@ class LoginController extends Controller
         if($user->role == 'admin') {
 
             return redirect('/dashboard/index');
-        }
+        } else {
 
-        return redirect('/home');
+            return redirect('/home');
+        }
     }
 
 
