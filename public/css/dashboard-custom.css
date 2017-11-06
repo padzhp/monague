@@ -36,6 +36,7 @@ html body .navbar-custom.sidebar{
 
 .login-logo{
     background: url(../images/mnc-admin-logo.svg) no-repeat center;
+    background-size: 230px 35px;
     width: 230px;
     margin: 30px auto 0px; 
     height: 35px; 
@@ -148,7 +149,7 @@ html body table.dataTable thead > tr > th{
 }
 
 a.btn-fixed-width.btn-txt-lg{
-  line-height: 50px !important;
+  line-height: 54px !important;
 }
 
 a.btn-fixed-width.btn-two-lines-text{
@@ -253,8 +254,20 @@ a.btn-fixed-width.btn-two-lines-text{
     margin-top: 8px !important;
 }
 
+.padded-20{
+  padding: 0 20px;
+}
+
 .notbold{
     font-weight: normal !important;
+}
+
+.label-block{
+  display: block;
+}
+
+.row-normal{
+  margin: 0 !important;
 }
 
 /* FORM VALIDATION */
@@ -267,6 +280,47 @@ label.error{
   font-weight: normal;
   font-size: 12px;
   margin-left: 10px;
+}
+
+#form-product label.error{
+  display: block;
+  margin-left: 0;
+}
+
+
+/*IMAGE UPLOAD*/
+
+form.avatar .slim,
+.data-table .slim{
+  width: 75px;
+  height: 75px;
+}
+
+form.avatar .slim-btn,
+.data-table .slim-btn{
+  width: 28px;
+  height: 28px;
+  margin: 0 4px;
+}
+
+
+form.avatar .slim-btn-group,
+.data-table .slim-btn-group{
+  padding: .5em 0;
+}
+
+form.avatar .slim,
+.data-table .slim{
+  background-color: #eeeeee;
+}
+
+form.avatar .slim-wrapper,
+.data-table .slim-wrapper{
+  width: 83px;
+  height: 83px;
+  border: 1px solid #dfdfdf;
+  padding: 3px;
+  border-radius: 4px;
 }
 
 
@@ -291,4 +345,16 @@ html body .btn-sm{
 
 html body table.dataTable{
   margin-bottom: 0 !important;
+}
+
+html body table.dataTable.non-striped tr:hover{
+  background-color: transparent !important;
+}
+
+html body table.dataTable.no-table-header thead{
+  display: none;
+}
+
+html body table.dataTable.no-table-header{
+  margin-top: 0 !important;
 }

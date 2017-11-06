@@ -1,4 +1,7 @@
 @extends('dashboard.layout.master')
+@section('styles')
+    <link href="{{asset('css/slim.min.css')}}" rel="stylesheet">
+@stop
 @section('content')
 					<div class="wrapper">
                         @if ($message = Session::get('success'))
@@ -53,18 +56,30 @@
                                     <div class="clearfix"></div>
                                 </div>
                                 <div class="dataTable_wrapper">
-                                    <table class="data-table table table-panel table-hover" id="datatable-products">
+                                    <table class="data-table table table-panel table-hover">
                                         <thead>
                                             <tr>
                                                 <th width="2%">&nbsp</th>
-                                                <th>Item</th>
-                                                <th>Country</th>
-                                                <th>UPC Code</th>
-                                                <th>1-5 PCS</th>
-                                                <th>6+ PCS</th>												
-                                                <th>PACK 6's</th>
-                                                <th>PACK 12's</th>
-                                                <th>Published</th>  
+                                                <th width="16%">Item</th>
+                                                <th width="12%">Country</th>
+                                                <th width="14%">UPC Code</th>
+                                                <th width="10%">1-5 PCS</th>
+                                                <th width="10%">6+ PCS</th>												
+                                                <th width="10%">PACK 6's</th>
+                                                <th width="10%">PACK 12's</th>
+                                                <th width="15%">Published</th>  
+                                            </tr>
+                                        </thead>                                        
+                                    </table>
+                                    <table class="data-table table table-panel table-hover no-table-header" id="datatable-products">
+                                        <thead>
+                                            <tr>
+                                                <th width="5%">&nbsp;</th>                                                
+                                                <th width="15%">&nbsp;</th>
+                                                <th width="30%">&nbsp;</th>                                             
+                                                <th width="20%">&nbsp;</th>
+                                                <th width="10%">&nbsp;</th>
+                                                <th width="20%">&nbsp;</th>  
                                             </tr>
                                         </thead>                                        
                                     </table>
@@ -83,15 +98,14 @@
                  <div class="pagination-container">
                  </div>
 
-
-                 
-                </div>
-
-
-                
+                             
 
 @stop
 
 @section('footer-scripts')
+        <script type="text/javascript" src="{{asset('js/slim.kickstart.min.js')}}"></script>
 		<script language="javascript" type="text/javascript" src="{{asset('js/dashboard/products.js')}}"></script>
+        <script language="javascript" type="text/javascript">
+            window.dashboard.products.init();
+        </script>
 @stop

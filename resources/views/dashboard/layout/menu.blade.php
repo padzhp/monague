@@ -6,27 +6,27 @@
                         <span class="profile-details">{{ Auth::user()->name }}<br />Administrator</span>
                     </li>
                     <li>
-                        <a href="/dashboard/index/" ><i class="mnc-icon mnc-dashboard"></i>Dashboard</a>
+                        <a href="{{url('dashboard/index')}}" ><i class="mnc-icon mnc-dashboard"></i>Dashboard</a>
                     </li>
                     <li>
-                        <a href="/dashboard/orders/"><i class="mnc-icon mnc-orders"></i>Orders</a>
+                        <a href="{{url('dashboard/orders')}}"><i class="mnc-icon mnc-orders"></i>Orders</a>
                     </li>
 					<li>
-                        <a href="/dashboard/customers/"><i class="mnc-icon mnc-customers"></i>Customers</a>
+                        <a href="{{url('dashboard/customers')}}"><i class="mnc-icon mnc-customers"></i>Customers</a>
                     </li>
 					<li>
-                        <a href="/dashboard/products/"><i class="mnc-icon mnc-products"></i>Products</a>
+                        <a href="{{url('dashboard/products')}}"><i class="mnc-icon mnc-products"></i>Products</a>
                     </li>
 					<li>
-                        <a href="/dashboard/products/"><i class="mnc-icon mnc-categories"></i>Categories</a>
+                        <a href="{{url('dashboard/categories')}}"><i class="mnc-icon mnc-categories"></i>Categories</a>
                     </li>
 					<li>
-                        <a href="/dashboard/pages/"><i class="mnc-icon mnc-pages"></i>Edit Pages</a>
+                        <a href="{{url('dashboard/pages')}}"><i class="mnc-icon mnc-pages"></i>Edit Pages</a>
                     </li>
                     <li>
-                        <a href="/dashboard/modules/"><i class="mnc-icon mnc-pages"></i>Modules</a>
+                        <a href="{{url('dashboard/modules')}}"><i class="mnc-icon mnc-pages"></i>Modules</a>
                     </li>
                     <li>
-                        <a href="/dashboard/admins/"><i class="mnc-icon mnc-admins"></i>Admins</a>
+                        <a href="{{url('dashboard/admins')}}"><i class="mnc-icon mnc-admins"></i>Admins</a>
                     </li>                    
                 </ul>

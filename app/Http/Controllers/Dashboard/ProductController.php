@@ -8,19 +8,24 @@ use Illuminate\Http\Request;
 use Carbon\Carbon;
 use App\Traits\ReturnsDatatable;
 use App\Product;
+use App\Category;
+use App\Slim;
 use DB;
+use Form;
 
 class ProductController extends Controller
 {
     use ReturnsDatatable;
     protected $connection = 'mysql';
+    var $category_tree = '';
 
     function index(){
         return view('dashboard.pages.product.index');
     }
 
-    public function datatable(Request $request)
+    public function datatable(Request $request)    
     {
+        $this->category_tree = $this->categoryTree();
         return $this->dtOutput();
     }
 
@@ -65,12 +70,12 @@ class ProductController extends Controller
 
     public function dtRowData(Product $product)
     {
-    
+        
         return [
             'id' => $product->id,           
             'name' => $product->name,
             'description' => $product->description,
-            'image' => $product->image,
+            'image' => asset($product->image),
             'status' => $product->status,
             'ordering' => $product->ordering, 
             'category' => $product->category, 
@@ -86,6 +91,7 @@ class ProductController extends Controller
             'us_six_pack' => $product->us_six_pack,             
             'us_dozen_pack' => $product->us_dozen_pack, 
             'us_sku' => $product->us_sku,
+            'category_list' => Form::select('product['.$product->id.'][category_id]', $this->category_tree, $product->category_id, ['class' => 'form-control'])->toHtml(),
         ];
     }
 
@@ -94,13 +100,19 @@ class ProductController extends Controller
         return $query->get()->count();
     }
 
-    public function create(){
-        return view('dashboard.pages.product.create');
+    public function create(){        
+        $lists['categories'] = $this->categoryTree();
+
+
+        return view('dashboard.pages.product.create', compact('lists'));
     }
     
     public function store(Request $request){
 
         $data = $request->all();
+        $data['image'] = Slim::slimCropImageAndSave('slim','products');
+
+
         $this->saveProduct($data, 0);
 
         return response()->json([
@@ -133,6 +145,7 @@ class ProductController extends Controller
              $product['us_published'] = isset($product['us_published']) ? 1 : 0;
              $product['ca_enabled'] = isset($product['ca_enabled']) ? 1 : 0;
              $product['us_enabled'] = isset($product['us_enabled']) ? 1 : 0;
+             $product['image'] = Slim::slimCropImageAndSave('', 'products', $id, $product['image']);
              //dd($product);             
              $updated = $this->saveProduct($product, $id);             
          }       
@@ -150,8 +163,11 @@ class ProductController extends Controller
         $data = array();
         
         $product = Product::findOrFail($id);
+
+        $data = $product->toArray();        
+        $data['image'] = asset($data['image']);
         
-        return response()->json($product->toArray());
+        return response()->json($data);
     }
 
     public function updateDescription(Request $request){
@@ -180,4 +196,19 @@ class ProductController extends Controller
         return $product;
 
     }
+
+    public function categoryTree(){
+
+        $cat = new Category();
+        $categories = $cat->getCategories('--');
+        $data = array();
+        $data[0] = 'Select Category';
+
+        foreach($categories as $category){
+            $data[$category->id] = $category->name;
+        }
+
+        return $data;
+    }
+    
 }

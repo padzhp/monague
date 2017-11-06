@@ -12,6 +12,7 @@ use App\Traits\ReturnsDatatable;
 use App\User;
 use App\Country;
 use App\Customer;
+use App\Slim;
 use DB;
 
 class AdminController extends BaseController
@@ -116,12 +117,14 @@ class AdminController extends BaseController
     public function store(Request $request){
 
         $data = $request->all();
+
+        $data['photo'] = Slim::slimCropImageAndSave('slim');
+
         $data['unhashed'] = $data['password'];
         $data['password'] = bcrypt($data['password']);
         $data['role']  = 'admin';
         $data['subscribed']  = 0;
         $data['country_id']  =  0;
-
         //dd($data);
 
         $this->saveAdmin($data, 0);
@@ -140,6 +143,9 @@ class AdminController extends BaseController
 
         $data['unhashed'] = $data['password'];
         $data['password'] = bcrypt($data['password']);
+        $user = User::find($id);
+        $data['photo'] = Slim::slimCropImageAndSave('slim', 'admins', $user->photo);
+        //dd()
 
         $this->saveAdmin($data, $id);
 

@@ -27,7 +27,7 @@ Route::group(['middleware' => 'App\Http\Middleware\AdminAuthenticate'], function
 	
 	Route::get('/dashboard/products/datatable', 'Dashboard\ProductController@datatable');
 	Route::get('/dashboard/products','Dashboard\ProductController@index');
-	Route::get('/dashboard/products/update','Dashboard\ProductController@update');
+	Route::post('/dashboard/products/update','Dashboard\ProductController@update');
 	Route::get('/dashboard/products/delete','Dashboard\ProductController@delete');
 	Route::get('/dashboard/products/create','Dashboard\ProductController@create');
 	Route::get('/dashboard/products/details','Dashboard\ProductController@details');
@@ -36,7 +36,7 @@ Route::group(['middleware' => 'App\Http\Middleware\AdminAuthenticate'], function
 
 	Route::get('/dashboard/categories', 'Dashboard\CategoryController@index');
 	Route::get('/dashboard/categories/datatable', 'Dashboard\CategoryController@datatable');
-	Route::get('/dashboard/categories/create','Dashboard\CategoryController@create');
+	Route::resource('/dashboard/categories','Dashboard\CategoryController');
 	Route::post('/dashboard/categories','Dashboard\CategoryController@store')->name('categories.store');
 
 	Route::get('/dashboard/admins', 'Dashboard\AdminController@index');

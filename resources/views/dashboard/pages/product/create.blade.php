@@ -1,6 +1,9 @@
 @extends('dashboard.layout.master')
+@section('styles')
+    <link href="{{asset('css/slim.min.css')}}" rel="stylesheet">
+@stop
 @section('content')
-                    {!! Form::open(array('route' => 'products.store','method'=>'POST','id'=>'form-submit')) !!}  
+                    {!! Form::open(array('route' => 'products.store','method'=>'POST','id'=>'form-product','class'=>'avatar','enctype'=>'multipart/form-data')) !!}  
 					<div class="wrapper">
 						<div class="panel panel-monague">
                             <div class="panel-heading">
@@ -21,7 +24,7 @@
 				 </div>
 
                  <div class="action-buttons-container">
-                    <button type="button" id="btn-submit" class="btn-save btn btn-fixed-width btn-txt-lg btn-blue">SAVE</button>
+                    <button type="submit" id="btn-submit" class="btn-save btn btn-fixed-width btn-txt-lg btn-blue">SAVE</button>
                     <button type="button" class="btn-close btn btn-fixed-width btn-txt-lg btn-yellow">CLOSE</button>                 
                  </div>
 
@@ -32,5 +35,10 @@
 @stop
 
 @section('footer-scripts')
-		
+		<script type="text/javascript" src="{{asset('js/slim.kickstart.min.js')}}"></script>
+        <script language="javascript" type="text/javascript" src="{{asset('js/dashboard/products.js')}}"></script>
+        <script language="javascript" type="text/javascript">
+            window.dashboard.products.formSubmit();
+            
+        </script>
 @stop

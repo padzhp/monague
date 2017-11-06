@@ -55,6 +55,20 @@ return [
             'visibility' => 'public',
         ],
 
+        'admins' => [
+            'driver' => 'local',
+            'root' => storage_path('app/public/admins'),
+            'url' => 'storage/admins',
+            'visibility' => 'public',
+        ],
+
+        'products' => [
+            'driver' => 'local',
+            'root' => storage_path('app/public/products'),
+            'url' => 'storage/products',
+            'visibility' => 'public',
+        ],
+
         's3' => [
             'driver' => 's3',
             'key' => env('AWS_KEY'),

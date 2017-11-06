@@ -1,6 +1,9 @@
 @extends('dashboard.layout.master')
+@section('styles')
+    <link href="{{asset('css/slim.min.css')}}" rel="stylesheet">
+@stop
 @section('content')
-                    {!! Form::open(array('route' => 'admins.store','method'=>'POST','id'=>'form-admin')) !!}  
+                    {!! Form::open(array('route' => 'admins.store','method'=>'POST','id'=>'form-admin','enctype'=>'multipart/form-data','class'=>'avatar')) !!}  
                     <div class="wrapper">
                         <div class="panel panel-monague">
                             <div class="panel-heading">
@@ -32,8 +35,10 @@
 @stop
 
 @section('footer-scripts')
+        <script type="text/javascript" src="{{asset('js/slim.kickstart.min.js')}}"></script>
         <script language="javascript" type="text/javascript" src="{{asset('js/dashboard/admins.js')}}"></script>
         <script language="javascript" type="text/javascript">
             window.dashboard.admins.formSubmit();
+            
         </script>
 @stop
