@@ -62,7 +62,8 @@ class CategoryController extends Controller
             'parent' => $category->parent == 1 ? ' - ' : $category->parentname,
             'ca_enabled' => $category->ca_status,            
             'us_enabled' => $category->us_status, 
-            'ordering' => $category->ordering,             
+            'ordering' => $category->ordering,
+            'DT_RowId' => $category->id,             
         ];
     }
 
@@ -72,10 +73,6 @@ class CategoryController extends Controller
     }
 
 
-    public function getParentCategoriesList($default="Root Category"){
-        return ([0=>$default ] + Category::orderBy('name')->pluck('name', 'id')->all());
-    }
-
     /**
      * Show the form for creating a new resource.
      *
@@ -83,7 +80,7 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        $lists['parent'] = $this->getParentCategoriesList();
+        $lists['parent'] = $this->categoryTree();
         return view('dashboard.pages.category.create', compact('lists'));
     }
 
@@ -98,28 +95,22 @@ class CategoryController extends Controller
         $category = Category::findOrFail($id);
         
        
-        $lists['parent'] = $this->getParentCategoriesList();
+        $lists['parent'] = $this->categoryTree();
 
         return view('dashboard.pages.category.edit', compact('category','lists'));
     }
 
     public function store(Request $request){
 
-        $data = $request->all();
-        $data['unhashed'] = $data['password'];
-        $data['password'] = bcrypt($data['password']);
-        $data['role']  = 'customer';
-        $data['subscribed']  = 0;
-        $data['country_id']  =  $data['billing_country'];
-
+        $data = $request->all();        
         //dd($data);
 
-        $this->saveCustomer($data, 0);
+        $this->saveCategory($data, 0);
 
         return response()->json([
             'status'=>'success',
-            'messages'=>['New customer added successfully'],
-            'returnurl'=>'/dashboard/customers',
+            'messages'=>['New category added successfully'],
+            'returnurl'=>'/dashboard/categories',
         ]);
 
     }
@@ -127,12 +118,37 @@ class CategoryController extends Controller
     public function update(Request $request, $id){
 
         $data = $request->except(['_token']);
-        $this->saveCustomer($data, $id);
+
+        //dd($data);
+
+        $this->saveCategory($data, $id);
 
          return response()->json([
             'status'=>'success',
-            'messages'=>['Customer information updated successfully'],
-            'returnurl'=>'/dashboard/customers',
+            'messages'=>['Category information updated successfully'],
+            'returnurl'=>'/dashboard/categories',
+        ]);
+
+    }
+
+    public function massupdate(Request $request){
+
+
+        $data = $request->except(['_token']);
+
+
+        foreach($data['category'] as $id=>$category){            
+             $category['ca_status'] = isset($category['ca_status']) ? 1 : 0;
+             $category['us_status'] = isset($category['us_status']) ? 1 : 0;           
+             $category['ordering'] = isset($category['ordering']) ? $category['ordering'] : 0; 
+             
+             $updated = $this->saveCategory($category, $id);             
+         }       
+
+        return response()->json([
+            'status'=>'success',
+            'messages'=>['Categories updated successfully'],
+            'returnurl'=>'/dashboard/categories',
         ]);
 
     }
@@ -175,5 +191,34 @@ class CategoryController extends Controller
             'messages'=>['Customer has been '.$status],
             'returnurl'=>'/dashboard/customers',
         ]);
+    }
+
+
+    public function saveCategory($data, $id=0){
+
+        if($id == 0){
+            $user = Category::create($data);            
+        } else {
+            $category = Category::find($id);
+            $category->update($data);           
+        }
+
+        return $category;
+
+    }
+
+
+    public function categoryTree(){
+
+        $cat = new Category();
+        $categories = $cat->getCategories('--');
+        $data = array();
+        $data[1] = 'Root Category';
+
+        foreach($categories as $category){
+            $data[$category->id] = $category->name;
+        }
+
+        return $data;
     }
 }

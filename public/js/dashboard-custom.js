@@ -7,7 +7,8 @@ $(function() {
 // Sets the min-height of #page-wrapper to window size
 
 (function(window, document, undefined) {
-    $(window).on("load resize", function() {
+    $(window).on("load resize", function() {   
+
         topOffset = 64;
         widthOffset = 202;
         width = (this.window.innerWidth > 0) ? this.window.innerWidth : this.screen.width;
@@ -92,6 +93,13 @@ $(function() {
 
 
 $(function() {
+
+    $('#select-all').on('change', function() {                    
+        var $this = $(this);
+        $this.closest('.data-table').find('[name="ids[]"]')
+            .prop('checked', $this.prop('checked'))
+            .trigger('change');
+    });
 
     $.fn.serializeControls = function() {
       var data = {};

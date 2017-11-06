@@ -1,29 +1,30 @@
 @extends('dashboard.layout.master')
 @section('content')
-                {!! Form::open(array('url' => 'dashboard/categories/massupdate','method'=>'POST','id'=>'form-categories-massupdate')) !!} 
 					<div class="wrapper">
-
                         @if ($message = Session::get('success'))
                             <div class="alert alert-success">
                                 <p>{{ $message }}</p>
                             </div>
                         @endif
+                        
+                        <!-- Modal -->
+                        
 						<div class="panel panel-monague">
                             <div class="panel-heading">
-                                CATEGORIES
+                                EDIT PAGES
                             </div>
                             <!-- /.panel-heading -->
                             <div class="panel-body">                                
                                 <div class="dataTable_wrapper">
-                                    <table class="data-table table table-panel table-hover" id="datatable-categories">
+                                    <table class="data-table table table-panel table-hover" id="datatable-pages">
                                         <thead>
-                                            <tr>
-                                                <th><input type="checkbox" id="select-all"></th>
-                                                <th>Category</th>
-                                                <th>Parent Category</th>
-                                                <th>CAD</th>
-                                                <th>US</th>
-                                                <th>Ordering</th>												
+                                            <tr> 
+                                                <th width="2%"><input type="checkbox" id="select-all"></th>    
+                                                <th width="20%">PAGE</th>                                          
+                                                <th>HEADER GRAPHIC</th>
+                                                <th width="10%">ORDERING</th>
+                                                <th width="10%">PUBLISHED</th>
+                                                <th width="10%">PUBLIC</th>                                                 
                                             </tr>
                                         </thead>                                        
                                     </table>
@@ -34,29 +35,24 @@
                         <!-- /.panel -->
                   
 				 </div>
-                 <div class="action-buttons-container">
+                 <div class="action-buttons-container">                    
                     <button type="submit" class="btn btn-fixed-width btn-blue">SAVE</button>
-                    <button type="button" class="btn btn-fixed-width btn-brown">UPDATE</button>
-                    <a role="button" href="{{ url('dashboard/categories/create') }}" class="btn btn-fixed-width btn-green btn-txt-lg">NEW</a> 
+                    <a role="button" href="{{ url('dashboard/pages/create') }}" class="btn btn-fixed-width btn-green btn-txt-lg">NEW</a> 
                     <button type="button" class="btn-confirm-delete btn btn-fixed-width btn-txt-lg btn-red">DELETE</button>
-                    <button type="button" class="btn btn-fixed-width btn-yellow">CLOSE</button>
+                    <button type="button" class="btn btn-fixed-width btn-yellow">CLOSE</button>                   
                  </div>
                  <div class="pagination-container">
                  </div>
 
 
                  
-                </div>
-
-            {!! Form::close() !!}
-                
+                             
 
 @stop
 
 @section('footer-scripts')
-		<script language="javascript" type="text/javascript" src="{{asset('js/dashboard/categories.js')}}"></script>
+		<script language="javascript" type="text/javascript" src="{{asset('js/dashboard/pages.js')}}"></script>
         <script language="javascript" type="text/javascript">
-            window.dashboard.categories.init();
-            window.dashboard.categories.formSubmit();
+            window.dashboard.pages.init();
         </script>
 @stop

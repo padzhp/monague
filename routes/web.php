@@ -38,6 +38,7 @@ Route::group(['middleware' => 'App\Http\Middleware\AdminAuthenticate'], function
 	Route::get('/dashboard/categories/datatable', 'Dashboard\CategoryController@datatable');
 	Route::resource('/dashboard/categories','Dashboard\CategoryController');
 	Route::post('/dashboard/categories','Dashboard\CategoryController@store')->name('categories.store');
+	Route::post('/dashboard/categories/massupdate', 'Dashboard\CategoryController@massupdate');
 
 	Route::get('/dashboard/admins', 'Dashboard\AdminController@index');
 	Route::get('/dashboard/admins/datatable', 'Dashboard\AdminController@datatable');
@@ -45,6 +46,11 @@ Route::group(['middleware' => 'App\Http\Middleware\AdminAuthenticate'], function
 	Route::resource('/dashboard/admins','Dashboard\AdminController');
 	Route::post('/dashboard/admins/unique_email', 'Dashboard\AdminController@uniqueEmail');
 	
+	Route::get('/dashboard/pages', 'Dashboard\PageController@index');
+	Route::get('/dashboard/pages/datatable', 'Dashboard\PageController@datatable');
+	Route::get('/dashboard/pages/delete','Dashboard\PageController@delete');
+	Route::resource('/dashboard/pages','Dashboard\PageController');	
+
 	//Route::get('/dashboard/migrate/users', 'Dashboard\MigrationController@users');
 	//Route::get('/dashboard/migrate/categories', 'Dashboard\MigrationController@categories');
 });

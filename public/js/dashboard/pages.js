@@ -1,5 +1,5 @@
 window.dashboard = {
-    customers:{
+    pages:{
         init: function() {            
             this.datatable();
             this.repositionPagination();
@@ -10,35 +10,53 @@ window.dashboard = {
             });
         },
         datatable: function() {
-            var dt = $('#datatable-customers').dataTable({
+            var dt = $('#datatable-pages').dataTable({
                 dom: 'rtp',
                 processing: true,
                 serverSide: true,
                 responsive: true,
                 ajax: {
-                    url: '/dashboard/customers/datatable',
+                    url: '/dashboard/pages/datatable',
                     data: function(d) {
-                        $.extend(d, {
-                            country:  $('[name="filter-country"]').val(),
+                        $.extend(d, {                            
                             search: $('[name="filter-search"]').val(),
                         });
                     }
                 },
                 pageLength: 10,
-                bSort: true,
+                bSort: false,
                 order: [],
-                columns: [
+                columns: [ 
                     {
                         mRender: function(d, t, r) {
                             return '<input type="checkbox" name="ids[]" value="' + r.id + '">';
                         },
                         orderable: false,
+                    }, { 
+                        data: 'title' 
+                    }, {
+                        mRender: function(d, t, r) {
+                            return '<div class="header-image-list-container"><image class="header-image-list" height="50" src="'+ r.image +'" title="'+ r.title +'" /></div>';
+                        },
+                        orderable: false,
+                    }, {
+                        mRender: function(d, t, r) {
+                            return '<input type="text" class="input-sm form-control input-autosize" size="5" name="page['+r.id+'][ordering]" value="' + r.ordering + '">';
+                        },
+                        orderable: false,
+                    }, {
+                        mRender: function(d, t, r) {
+                            var checked = r.published == 1 ? 'checked="checked"' : '';
+                            return '<input type="checkbox" name="page['+r.id+'][published]" value="1" '+ checked +' />';
+                        },
+                        orderable: false,
+                    }, {
+                        mRender: function(d, t, r) {
+                            var checked = r.public == 1 ? 'checked="checked"' : '';
+                            return '<input type="checkbox" name="page['+r.id+'][public]" value="1" '+ checked +' />';
+                        },
+                        orderable: false,
                     },
-                    { data: 'country' },
-                    { data: 'company' },
-                    { data: 'contact' },
-                    { data: 'email' },
-                    { data: 'created_at' },
                 ]
             });
 
@@ -53,12 +71,13 @@ window.dashboard = {
                 dt.fnDraw();
             });
 
+           
             $('button.btn-confirm-delete').on('click', function(e) {                  
               var checked = $('[name="ids[]"]:checked');
                 if (checked.length > 0) {
                     swal({
                         title: '',
-                        text: "Are you sure you want to delete these customer/s?",
+                        text: "Are you sure you want to delete these page/s?",
                         icon: 'warning',
                         buttons: {
                             confirm: "Yes",
@@ -67,7 +86,7 @@ window.dashboard = {
                     }).then((value) => {
                         if(value == true){
                             jQuery.ajax({
-                                url: "/dashboard/customers/delete?" + checked.serialize(),                                
+                                url: "/dashboard/pages/delete?" + checked.serialize(),                                
                                 dataType: "json",                        
                             }).done(function(data){
                                 window.ajaxFormSubmitMsgHandlerSuccess(data);
@@ -77,26 +96,13 @@ window.dashboard = {
                 }                  
             });
 
-            $('#datatable-customers tbody').on('click', 'tr', function () {
+            $('#datatable-pages tbody').on('click','tr',function(e){
                 var id = $(this).attr('id');
-                window.location.href = '/dashboard/customers/' + id + '/edit';
+                window.location.href = '/dashboard/pages/' + id + '/edit';
             } );
 
-            $('[name="filter-country"]').on('change', function() {
-                dt.fnDraw();
-            });
-
-           
-            $('[name="filter-search"]').donetyping(function () {
-                dt.fnDraw();
-            }).on('keypress', function (e) {
-                if (e.keyCode == 13) {
-                    dt.fnDraw();
-                }
-            });
-
-            $('[name="filter-search"]').next('a').on('click', function() {
-                dt.fnDraw();
+           $('#datatable-pages tbody').on('click','tr input',function(e){
+                e.stopPropagation(); 
             });
         },
 
@@ -108,7 +114,7 @@ window.dashboard = {
                 }
             });
 
-            $("#form-customer").validate({
+            $("#form-admin").validate({
                 rules: {
                     name: "required",                    
                     password: {
@@ -119,7 +125,7 @@ window.dashboard = {
                         required: true,
                         email: true,
                         remote: {
-                            url: "/dashboard/customers/unique_email",  
+                            url: "/dashboard/admins/unique_email",  
                             type: "post",
                             data: {
                               id: function() {
@@ -128,20 +134,11 @@ window.dashboard = {
                             }
                         }
 
-                    },
-                    company: "required",
-                    billing_street: "required",
-                    billing_city: "required",
-                    billing_state: "required",
-                    billing_zip: "required",
-                    billing_country: "required",
-                    phone: "required",
-                    tax_number: "required",
+                    },                    
                     
                 },
                 messages: {
-                    company: "Please enter your company name",
-                    name: "Please enter your contact name",                    
+                    name: "Please enter the admin name",                                      
                     password: {
                         required: "Please provide a password",
                         minlength: "Your password must be at least 5 characters long"
@@ -155,7 +152,7 @@ window.dashboard = {
                 }
             });
 
-            $('#form-customer').on('submit', function(e) {
+            $('#form-admin').on('submit', function(e) {
                 e.preventDefault();
                 if ($(this).valid()) {
                     $.ajax({
@@ -170,46 +167,29 @@ window.dashboard = {
                 }
             });
 
-            $('button.btn-confirm-delete').on('click', function(e) {                  
-              var ids = $('[name="id"]');
-                if (ids.length > 0) {
-                    swal({
-                        title: '',
-                        text: "Are you sure you want to delete this customer?",
-                        icon: 'warning',
-                        buttons: {
-                            confirm: "Yes",
-                            cancel: true
-                        },
-                    }).then((value) => {
-                        if(value == true){
-                            jQuery.ajax({
-                                url: "/dashboard/customers/delete?" + ids.serialize(),                                
-                                dataType: "json",                        
-                            }).done(function(data){
-                                window.ajaxFormSubmitMsgHandlerSuccess(data);
-                            }).fail(ajaxFormSubmitMsgHandlerError);
-                        }
-                    });                    
-                }                  
-            });
-
-            $('button.btn-confirm-activate').on('click', function(e) {                  
-                var id = $('[name="id"]').val();
-                var status = $(this).data('status');
-              
-                jQuery.ajax({
-                    url: "/dashboard/customers/activate",
-                    data: {
-                        id: id, 
-                        status: status
-                    },                                
-                    dataType: "json",                        
-                }).done(function(data){
-                    window.ajaxFormSubmitMsgHandlerSuccess(data);
-                }).fail(ajaxFormSubmitMsgHandlerError);
-                                      
-                                  
+             $('button.btn-confirm-delete').on('click', function(e) {                  
+              var admin_id = $('[name="id"]').val();
+                swal({
+                    title: '',
+                    text: "Are you sure you want to delete this admin?",
+                    icon: 'warning',
+                    buttons: {
+                        confirm: "Yes",
+                        cancel: true
+                    },
+                }).then((value) => {
+                    if(value == true){
+                        jQuery.ajax({
+                            url: "/dashboard/admins/delete",
+                            data: {
+                                    id: admin_id,
+                            },
+                            dataType: "json",                        
+                        }).done(function(data){
+                            window.ajaxFormSubmitMsgHandlerSuccess(data);
+                        }).fail(ajaxFormSubmitMsgHandlerError);
+                    }
+                });         
             });
         },
     },        

@@ -125,6 +125,13 @@ return [
 
     'log_level' => env('APP_LOG_LEVEL', 'debug'),
 
+
+    /* default images */
+    'default_header_image' => 'storage/default_header.jpg',
+    'default_product_image' => 'storage/default_product.jpg',
+    'default_user_image' => 'storage/default_user.jpg',
+
+
     /*
     |--------------------------------------------------------------------------
     | Autoloaded Service Providers

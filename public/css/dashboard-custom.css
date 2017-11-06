@@ -324,6 +324,19 @@ form.avatar .slim-wrapper,
 }
 
 
+.header-image-list-container{
+  border: 2px solid #dfdfdf;
+  padding: 3px;
+  border-radius: 4px;
+  display:inline-block;
+}
+
+.header-image-list{
+  border-radius: 2px;
+}
+
+
+
 /* OVERRIDES */
 .form-control.input-autosize{
     display: inline-block;

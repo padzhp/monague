@@ -15,15 +15,13 @@
                                         <tbody>
                                             <tr> 
                                                 <td>&nbsp;</td>                                               
-                                                <td><input type="text" value="" name="category[name]" class="form-control input-autosize input-sm" size="25" /></td>
+                                                <td>{!! Form::Text('name', null, array('class' => 'form-control input-sm input-autosize','size' => '25')) !!}</td>
                                                 <td>
-                                                    <select name="category[parent]" size="20" class="form-control input-autosize input-sm">
-                                                        <option value="0">Select Category</option>
-                                                    </select>
+                                                     {!! Form::select('parent', $lists['parent'], null, ['class' => 'form-control input-sm input-autosize']) !!}
                                                 </td>
-                                                <td><input type="checkbox" name="category[ca_enabled]" value="1"></td>                                             
-                                                <td><input type="checkbox" name="category[us_enabled]" value="1"></td>
-                                                <td><input type="text" class="form-control input-sm input-autosize" size="5" name="category[ordering]" value=""></td>
+                                                <td>{!!Form::checkbox('ca_status') !!}</td>                                             
+                                                <td>{!!Form::checkbox('us_status') !!}</td>
+                                                <td>{!! Form::Text('ordering', null, array('class' => 'form-control input-sm input-autosize','size' => '5')) !!}</td>
                                                  <td>&nbsp;</td> 
                                             </tr>                                            
                                         </tbody>                                         
