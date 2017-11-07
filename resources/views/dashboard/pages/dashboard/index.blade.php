@@ -1,6 +1,6 @@
 @extends('dashboard.layout.master')
 @section('content')
-					<div class="wrapper">
+					<div class="wrapper marginbottom-30">
 						<div class="panel panel-monague">
                             <div class="panel-heading">
                                 RECENT ORDERS
@@ -8,7 +8,7 @@
                             <!-- /.panel-heading -->
                             <div class="panel-body">
                                 <div class="dataTable_wrapper">
-                                    <table class="table table-striped table-panel table-hover" id="dataTables-example">
+                                    <table class="table table-striped table-panel table-hover" id="datatable-orders">
                                         <thead>
                                             <tr>
                                                 <th>Date</th>
@@ -22,87 +22,69 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr class="">
-                                                <td>09-11-2017</td>
-                                                <td>1178</td>
-                                                <td>US</td>
-												<td>OK Gift Shop</td>
-												<td>Tateko Takahashi</td>
-                                                <td class="right">908.59</td>
-												<td>ON MY ACCOUNT</td>
-												<td>Pending</td>
+                                        	@foreach($orders as $order)
+                                            <tr>
+                                                <td>{{ date('m-d-Y', strtotime($order->created_at)) }}</td>
+                                                <td>{{ $order->id }}</td>
+                                                <td>{{ $order->order_country }}</td>
+                                                <td>{{ $order->company }}</td>
+                                                <td>{{ $order->customer }}</td>
+												<td>${{ number_format($order->total,2) }}</th>
+												<td>{{ $order->payment_type ? $lists['payment_types'][trim($order->payment_type)] : "" }}</td>
+												<td>{{ $order->status }}</td>
                                             </tr>
-                                            <tr class="">
-                                                <td>09-11-2017</td>
-                                                <td>1179</td>
-                                                <td>CAD</td>
-												<td>Warcraft Store</td>
-												<td>Tateko Takahashi</td>
-                                                <td class="right">1,345.80</td>
-												<td>APPLY FOR NET30</td>
-												<td>Confirmed</td>
-                                            </tr>
-                                            
-                                        </tbody>
+                                            @endforeach
+                                        </tbody>                                          
                                     </table>
                                 </div>
                             </div>
                             <!-- /.panel-body -->
                         </div>
-                        <!-- /.panel -->
-                  
+                        <!-- /.panel -->                  
 				 </div>
-                 <div class="wrapper">
-					<div class="panel panel-monague">
+
+
+				 <div class="wrapper marginbottom-30">
+						<div class="panel panel-monague">
                             <div class="panel-heading">
                                 NEW CUSTOMERS FOR ACTIVATION
                             </div>
                             <!-- /.panel-heading -->
                             <div class="panel-body">
                                 <div class="dataTable_wrapper">
-                                    <table class="table table-striped table-panel table-hover" id="dataTables-example">
+                                    <table class="table table-striped table-panel" id="datatable-orders">
                                         <thead>
                                             <tr>
                                                 <th>Date</th>
-                                                <th>ID</th>
-                                                <th>Country</th>
-                                                <th>Company</th>
+                                                <th>Country</th>                                                
+                                                <th>Company Name</th>
                                                 <th>Customer Name</th>
-												<th>Amount</th>
-												<th>Payment Type</th>
-												<th>Status</th>
+												<th>Email Add</th>
+												<th>&nbsp;</th>												
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr class="">
-                                                <td>09-11-2017</td>
-                                                <td>1178</td>
-                                                <td>US</td>
-												<td>OK Gift Shop</td>
-												<td>Tateko Takahashi</td>
-                                                <td class="right">908.59</td>
-												<td>ON MY ACCOUNT</td>
-												<td>Pending</td>
+                                        	@foreach($customers as $customer)
+                                            <tr>
+                                                <td>{{ date('m-d-Y', strtotime($customer->created_at)) }}</td>
+                                                <td>{{ $customer->billing_country == 1 ? "US" : "CAD" }}</td>
+                                                <td>{{ $customer->company }}</td>
+                                                <td>{{ $customer->name }}</td>
+                                                <td>{{ $customer->email }}</td>
+												<td><button type="button" data-loading-text="Activating..." data-id="{{ $customer->user_id }}" class="btn btn-sm btn-green btn-activate-user">ACTIVATE</button>
+                                                    
+                                                </td>												
                                             </tr>
-                                            <tr class="">
-                                                <td>09-11-2017</td>
-                                                <td>1179</td>
-                                                <td>CAD</td>
-												<td>Warcraft Store</td>
-												<td>Tateko Takahashi</td>
-                                                <td class="right">1,345.80</td>
-												<td>APPLY FOR NET30</td>
-												<td>Confirmed</td>
-                                            </tr>
-                                            
-                                        </tbody>
+                                            @endforeach
+                                        </tbody>                                          
                                     </table>
                                 </div>
                             </div>
                             <!-- /.panel-body -->
                         </div>
-                        <!-- /.panel -->
+                        <!-- /.panel -->                  
 				 </div>
+                 
                  <div class="wrapper">
 					<div class="panel panel-monague">
                             <div class="panel-heading">
@@ -113,57 +95,53 @@
 									<div class="col-lg-3 col-md-6">
 										<div class="hero-widget well-sm">
 											<div class="icon">
-												<i class="glyphicon glyphicon-user"></i>
+												<div class="mnc-hero-icons mnc-monthly-sales"></div>
 											</div>
 											<div class="text">
-												<span class="value">3</span>
-												<label class="text-muted">Hero Widget</label>
-											</div>
-											<div class="options">
-												<a href="javascript:;" class="btn btn-primary btn-lg"><i class="glyphicon glyphicon-plus"></i> Primary Action</a>
-											</div>
+												<label class="hero-widget-title">TOTAL SALES<br />THIS MONTH</label>
+											</div>	
+											<div class="stats">												
+												<label>{{ $lists['monthly_sales'] ? number_format($lists['monthly_sales'],0) : 0 }}</label>
+											</div>											
 										</div>
 									</div>
 									<div class="col-lg-3 col-md-6">
 										<div class="hero-widget well-sm">
 											<div class="icon">
-												<i class="glyphicon glyphicon-user"></i>
+												<div class="mnc-hero-icons mnc-customer-sales"></div>
 											</div>
 											<div class="text">
-												<span class="value">3</span>
-												<label class="text-muted">Hero Widget</label>
+												<label class="hero-widget-title">TOTAL SALES<br />FROM NEW<br />CUSTOMERS</label>
 											</div>
-											<div class="options">
-												<a href="javascript:;" class="btn btn-primary btn-lg"><i class="glyphicon glyphicon-plus"></i> Primary Action</a>
-											</div>
+											<div class="stats">												
+												<label>5,250</label>
+											</div>												
 										</div>
 									</div>
 									<div class="col-lg-3 col-md-6">
 										<div class="hero-widget well-sm">
 											<div class="icon">
-												<i class="glyphicon glyphicon-user"></i>
+												<div class="mnc-hero-icons mnc-customer-registered"></div>
 											</div>
-											<div class="text">
-												<span class="value">3</span>
-												<label class="text-muted">Hero Widget</label>
+											<div class="text">												
+												<label class="hero-widget-title">NEW CUSTOMER<br />REGISTRATIONS<br />THIS MONTH</label>
 											</div>
-											<div class="options">
-												<a href="javascript:;" class="btn btn-primary btn-lg"><i class="glyphicon glyphicon-plus"></i> Primary Action</a>
-											</div>
+											<div class="stats">												
+												<label>{{ $lists['new_customers'] ? number_format($lists['new_customers'],0) : 0 }}</label>
+											</div>																						
 										</div>
 									</div>
 									<div class="col-lg-3 col-md-6">
 										<div class="hero-widget well-sm">
 											<div class="icon">
-												<i class="glyphicon glyphicon-user"></i>
+												<div class="mnc-hero-icons mnc-top10-items"></div>
 											</div>
-											<div class="text">
-												<span class="value">3</span>
-												<label class="text-muted">Hero Widget</label>
+											<div class="text">												
+												<label class="hero-widget-title">TOP 10 MOST<br />ORDERED<br />ITEMS</label>
 											</div>
-											<div class="options">
-												<a href="javascript:;" class="btn btn-primary btn-lg"><i class="glyphicon glyphicon-plus"></i> Primary Action</a>
-											</div>
+											<div class="stats">												
+												<a href="/dashboard/index/top10">VIEW</a>
+											</div>											
 										</div>
 									</div>
 								</div>
@@ -175,11 +153,8 @@
 @stop
 
 @section('footer-scripts')
-		<script>
-            $(document).ready(function() {
-                $('#dataTables-example').DataTable({
-                        responsive: true
-                });
-            });
+		<script language="javascript" type="text/javascript" src="{{asset('js/dashboard/index.js')}}"></script>
+        <script language="javascript" type="text/javascript">
+            window.dashboard.index.init();
         </script>
 @stop

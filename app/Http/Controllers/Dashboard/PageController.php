@@ -11,6 +11,7 @@ use App\Page;
 use App\Slim;
 
 use DB;
+use Auth;
 
 
 class PageController extends Controller
@@ -85,16 +86,15 @@ class PageController extends Controller
 
         $data = $request->all();
 
-        $data['photo'] = Slim::slimCropImageAndSave('slim');
+        $data['image'] = Slim::slimCropImageAndSave('slim', 'pages');
 
-        $data['unhashed'] = $data['password'];
-        $data['password'] = bcrypt($data['password']);
-        $data['role']  = 'admin';
-        $data['subscribed']  = 0;
-        $data['country_id']  =  0;
-        //dd($data);
+        $data['published'] = isset($data['published']) ? 1 : 0;
+        $data['public'] = isset($data['public']) ? 1 : 0;
+        $data['author'] = Auth::user()->id;
+        $data['status'] = 1;
 
-        $this->saveAdmin($data, 0);
+
+        $this->savePage($data, 0);
 
         return response()->json([
             'status'=>'success',
@@ -108,13 +108,12 @@ class PageController extends Controller
 
         $data = $request->except(['_token']);
 
-        $data['unhashed'] = $data['password'];
-        $data['password'] = bcrypt($data['password']);
-        $user = User::find($id);
-        $data['photo'] = Slim::slimCropImageAndSave('slim', 'admins', $user->photo);
-        //dd()
+        $page = Page::find($id);
+        $data['image'] = Slim::slimCropImageAndSave('slim', 'pages', $page->image);
+        $data['published'] = isset($data['published']) ? 1 : 0;
+        $data['public'] = isset($data['public']) ? 1 : 0;
 
-        $this->saveAdmin($data, $id);
+        $this->savePage($data, $id);
 
          return response()->json([
             'status'=>'success',
@@ -124,34 +123,31 @@ class PageController extends Controller
 
     }
 
-    public function delete(Request $request){
-        $id = $request->id;
-        $data['status'] = -2;
-        $updated = $this->saveAdmin($data, $id);
-
-        return response()->json([
-            'status'=>'success',
-            'messages'=>['Page has been deleted'],
-            'returnurl'=>'/dashboard/pages',
-        ]);
-    }
-
-
-    public function activate(Request $request){
-        $id = $request->id;
-        $data['status'] = 1;
+     public function delete(Request $request){
         
-        $user = User::find($id);
-        $user->update($data);
+        $ids = $request->ids;
+        $data['status'] = -2;
+
+        if(is_array($ids)){
+
+            Page::whereIn('id',$ids)                      
+            ->update(['status' => -2]);
+
+        } else {
+            $ids = $request->id;
+            $page = Page::find($ids);
+            $page->update($data);
+        }
 
         return response()->json([
             'status'=>'success',
-            'messages'=>['Page has been activated'],
+            'messages'=>['Page/s has been deleted'],
             'returnurl'=>'/dashboard/pages',
         ]);
     }
+ 
 
-    public function savePages($data, $id=0){
+    public function savePage($data, $id=0){
 
         if($id == 0){
             $page = Page::create($data);            

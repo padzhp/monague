@@ -18,6 +18,9 @@ class OrderController extends BaseController
 {
 	use ReturnsDatatable;
 	protected $connection = 'mysql';
+    var $payment_types = '';
+    var $order_status = '';
+    
 
     function index(){
 		return view('dashboard.pages.order.index');
@@ -25,6 +28,7 @@ class OrderController extends BaseController
 
 	public function datatable(Request $request)
     {
+        $this->payment_types = config('app.payment_types');
         return $this->dtOutput();
     }
 
@@ -36,8 +40,8 @@ class OrderController extends BaseController
         $query = Order::where('id','<>',0);
 
         if (!is_array($search) && trim($search) != '') {
-            $query->where('orders.order_company', 'LIKE', '%'.$search.'%');
-            $query->orWhere('orders.order_contact', 'LIKE', '%'.$search.'%');
+            $query->where('orders.company', 'LIKE', '%'.$search.'%');
+            $query->orWhere('orders.customer', 'LIKE', '%'.$search.'%');
         }
 
         if ($request->year) {
@@ -57,18 +61,18 @@ class OrderController extends BaseController
     {
         $request = request();
         $sort_by = 'orders.created_at';
-        $sort_order = 'ASC';
+        $sort_order = 'DESC';
 
         if (isset($request->order[0])) {
             $sortable = [                
                 'orders.created_at',
                 'orders.order_id',                
                 'orders.order_country',
-                'orders.order_company',
-                'orders.order_contact',                
-                'orders.order_total',
-                'orders.order_payment_type',
-                'orders.order_status',
+                'orders.company',
+                'orders.customer',                
+                'orders.amount',
+                'orders.payment_type',
+                'orders.status',
             ];
             $col = $request->order[0]['column'];
             $sort_by = isset($sortable[$col]) ? $sortable[$col] : 'created_at';
@@ -83,22 +87,51 @@ class OrderController extends BaseController
 
     public function dtRowData(Order $order)
     {
+        
         return [
+            'DT_RowId' => $order->id,
             'id' => $order->id,
-            'order_id' => $order->order_id,
-            'order_country' => $order->order_country,
-            'created_at' => $order->created_at->format('m-d-Y'),
-            'order_contact' => $order->order_contact,
-            'order_total' => $order->order_total,
-            'order_company' => $order->order_company,
-            'order_payment_type' => $order->order_payment_type,
-            'order_status' => $order->order_status,            
+            'order_id' => $order->id,
+            'order_country' => $order->billing_country,
+            'created_at' => date('m-d-Y',strtotime($order->created_at)),
+            'order_contact' => $order->customer,
+            'order_total' => $order->total,
+            'order_company' => $order->company,
+            'order_payment_type' => $order->payment_type ? $this->payment_types[$order->payment_type] : '',
+            'order_status' => $order->status ? $order->status : '',            
         ];
     }
 
     public function dtTotal($query)
     {
         return $query->get()->count();
+    }
+
+
+    public function details($id){
+
+
+        $order = Order::with('orderitems')
+                ->findOrFail($id); 
+
+
+        if($order->shipping_address){
+            $order->shipping_address .= ' '.$order->shipping_city;
+            $order->shipping_address .= ' '.$order->shipping_state;
+            $order->shipping_address .= ' '.$order->shipping_zip;
+            $order->shipping_address .= ', '.$order->shipping_country;
+        } else {
+            $order->shipping_address .= $order->billing_address.' '.$order->billing_city;
+            $order->shipping_address .= ' '.$order->billing_state;
+            $order->shipping_address .= ' '.$order->billing_zip;
+            $order->shipping_address .= ', '.$order->billing_country;
+        }
+       
+        $lists = array();
+        $lists['payment_types'] = config('app.payment_types');
+        $lists['order_status'] = config('app.order_status');
+
+        return view('dashboard.pages.order.details', compact('order','lists'));
     }
 	
 	

@@ -28,7 +28,6 @@ class LoginController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/dashboard/index';
 
     protected $connection = 'mysql'; 
 
@@ -52,6 +51,7 @@ class LoginController extends Controller
         ]);
     }
 
+    
     /**
      * Create a new user instance after a valid registration.
      *
@@ -76,15 +76,16 @@ class LoginController extends Controller
         ]);
     }*/
 
-    protected function authenticated(Request $request, $user)
-    {    
-       
-        if($user->role == 'admin') {
+    protected function redirectTo()   
+    {   
+      
+        if(auth()->user()->role == 'admin') {
 
-            return redirect('/dashboard/index');
+            return '/dashboard/index';
+
         } else {
 
-            return redirect('/home');
+            return '/home';
         }
     }
 

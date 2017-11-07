@@ -132,6 +132,23 @@ return [
     'default_user_image' => 'storage/default_user.jpg',
 
 
+    'payment_types' => [
+        'payment_offline' => 'Offline Payment',
+        'payment_banktransfer' => 'Bank Transfer',
+        'credit_card_payment' => 'Credit Card',
+        'on_my_account' => 'On My Account',
+        'payment_e_transfer' => 'Electronic Transfer'        
+    ],
+
+
+    'order_status' => [
+        'Pending' => 'Pending',
+        'Confirmed' => 'Confirmed',        
+        'Processed' => 'Processed',
+        '' => '',       
+    ],
+
+
     /*
     |--------------------------------------------------------------------------
     | Autoloaded Service Providers

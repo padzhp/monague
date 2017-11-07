@@ -69,6 +69,13 @@ return [
             'visibility' => 'public',
         ],
 
+        'pages' => [
+            'driver' => 'local',
+            'root' => storage_path('app/public/pages'),
+            'url' => 'storage/pages',
+            'visibility' => 'public',
+        ],
+
         's3' => [
             'driver' => 's3',
             'key' => env('AWS_KEY'),

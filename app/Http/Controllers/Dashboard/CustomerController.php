@@ -145,6 +145,10 @@ class CustomerController extends BaseController
     public function update(Request $request, $id){
 
         $data = $request->except(['_token']);
+
+        $data['unhashed'] = $data['password'];
+        $data['password'] = bcrypt($data['password']);
+        
         $this->saveCustomer($data, $id);
 
          return response()->json([

@@ -114,45 +114,17 @@ window.dashboard = {
                 }
             });
 
-            $("#form-admin").validate({
+            $("#form-pages").validate({
                 rules: {
-                    name: "required",                    
-                    password: {
-                        required: true,
-                        minlength: 5
-                    },                   
-                    email: {
-                        required: true,
-                        email: true,
-                        remote: {
-                            url: "/dashboard/admins/unique_email",  
-                            type: "post",
-                            data: {
-                              id: function() {
-                                return $( "#id" ).val();
-                              }
-                            }
-                        }
-
-                    },                    
+                    title: "required",                                                                                            
                     
                 },
                 messages: {
-                    name: "Please enter the admin name",                                      
-                    password: {
-                        required: "Please provide a password",
-                        minlength: "Your password must be at least 5 characters long"
-                    },                   
-                    email: {
-                        required: "Please enter a valid email address",
-                        remote: 'Email is already existing'
-
-                    }
-                    
+                    title: "Please enter the page title",                    
                 }
             });
 
-            $('#form-admin').on('submit', function(e) {
+            $('#form-pages').on('submit', function(e) {
                 e.preventDefault();
                 if ($(this).valid()) {
                     $.ajax({
@@ -168,10 +140,10 @@ window.dashboard = {
             });
 
              $('button.btn-confirm-delete').on('click', function(e) {                  
-              var admin_id = $('[name="id"]').val();
+              var page_id = $('[name="id"]').val();
                 swal({
                     title: '',
-                    text: "Are you sure you want to delete this admin?",
+                    text: "Are you sure you want to delete this page/s?",
                     icon: 'warning',
                     buttons: {
                         confirm: "Yes",
@@ -180,9 +152,9 @@ window.dashboard = {
                 }).then((value) => {
                     if(value == true){
                         jQuery.ajax({
-                            url: "/dashboard/admins/delete",
+                            url: "/dashboard/pages/delete",
                             data: {
-                                    id: admin_id,
+                                    id: page_id,
                             },
                             dataType: "json",                        
                         }).done(function(data){

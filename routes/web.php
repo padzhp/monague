@@ -14,9 +14,13 @@
 Route::group(['middleware' => 'App\Http\Middleware\AdminAuthenticate'], function () {
 
 	Route::get('/dashboard/index', 'Dashboard\DashboardController@index');
+	Route::get('/dashboard/index/top10', 'Dashboard\DashboardController@topOrderedItems');
+	Route::get('/dashboard/index/activate', 'Dashboard\DashboardController@activate');
+	Route::get('/dashboard/index/deactivate', 'Dashboard\DashboardController@deactivate');
 	
 	Route::get('/dashboard/orders', 'Dashboard\OrderController@index');
 	Route::get('/dashboard/orders/datatable', 'Dashboard\OrderController@datatable');
+	Route::get('/dashboard/orders/details/{id}', 'Dashboard\OrderController@details');
 	
 	Route::get('/dashboard/customers', 'Dashboard\CustomerController@index');
 	Route::get('/dashboard/customers/datatable', 'Dashboard\CustomerController@datatable');
@@ -53,6 +57,7 @@ Route::group(['middleware' => 'App\Http\Middleware\AdminAuthenticate'], function
 
 	//Route::get('/dashboard/migrate/users', 'Dashboard\MigrationController@users');
 	//Route::get('/dashboard/migrate/categories', 'Dashboard\MigrationController@categories');
+	//Route::get('/dashboard/migrate/orders', 'Dashboard\MigrationController@orders');
 });
 
 Auth::routes();

@@ -7,8 +7,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-
-    <title>Startmin - Bootstrap Admin Theme</title>
+    <title>Monague</title>
     
     <!-- MetisMenu CSS -->
     <link href="{{asset('css/metisMenu.min.css')}}" rel="stylesheet">
@@ -61,8 +60,8 @@
         <!-- Top Navigation: Right Menu -->
         <ul class="nav navbar-right navbar-top-links">
             <li class="dropdown navbar-inverse">
-                <a class="btn btn-yellow href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                    Logout
+                <a class="btn btn-yellow btn-logout" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                    LOG-OUT
                 </a>              
 
                 <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">

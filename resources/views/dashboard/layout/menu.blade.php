@@ -23,9 +23,9 @@
 					<li>
                         <a href="{{url('dashboard/pages')}}"><i class="mnc-icon mnc-pages"></i>Edit Pages</a>
                     </li>
-                    <li>
+                    <!--<li>
                         <a href="{{url('dashboard/modules')}}"><i class="mnc-icon mnc-pages"></i>Modules</a>
-                    </li>
+                    </li>-->
                     <li>
                         <a href="{{url('dashboard/admins')}}"><i class="mnc-icon mnc-admins"></i>Admins</a>
                     </li>                    

@@ -14,6 +14,8 @@ use App\Customer;
 use App\Member;
 use App\Product;
 use App\Category;
+use App\Order;
+use App\OrderItem;
 use DB;
 
 class MigrationController extends BaseController
@@ -110,5 +112,84 @@ class MigrationController extends BaseController
 		echo $counter.' categories migrated successfully';
 		
 		
+	}
+
+	public function orders(){
+
+		ini_set('max_execution_time', '10000');
+
+		$data = array();
+		$data2 = array();
+		$ids = array();
+		$counter = 0;
+
+		 $orders = DB::connection('mysql2')
+				->table('mnc_k2store_orders as a')
+				->join('mnc_k2store_orderinfo as b','b.order_id','=','a.order_id')				
+				->get();
+
+				
+		foreach($orders as $order){
+			if(in_array($order->id, $ids))
+				continue;
+			$ids[] = $order->id;
+			$data['id'] = $order->id;
+			$data['order_id'] = $order->order_id;
+			$data['user_id'] = $order->user_id;
+			$data['email'] = $order->user_email;
+			$data['token'] = $order->token;
+			$data['status'] = $order->order_state;
+			$data['payment_type'] = $order->orderpayment_type;
+			$data['total'] = $order->order_total;
+			$data['currency'] = $order->currency_code;
+			$data['customer_note'] = $order->customer_note;
+			$data['company'] = $order->billing_company;
+			$data['customer'] = $order->billing_first_name;
+			$data['phone'] = $order->billing_phone_1;
+			$data['billing_address'] = $order->billing_address_1;
+			$data['billing_city'] = $order->billing_city;
+			$data['billing_state'] = $order->billing_zone_name;
+			$data['billing_country'] = $order->billing_country_name;
+			$data['billing_zip'] = $order->billing_zip;
+			$data['tax_number'] = $order->billing_tax_number;
+			$data['shipping_address'] = $order->shipping_address_1;
+			$data['shipping_city'] = $order->shipping_city;
+			$data['shipping_state'] = $order->shipping_zone_name;
+			$data['shipping_country'] = $order->shipping_country_name;
+			$data['shipping_zip'] = $order->shipping_zip;
+			$data['created_at'] = $order->created_date == '0000-00-00 00:00:00' ? '2012-01-01 00:00:00' : $order->created_date;
+			$data['updated_at'] = $data['created_at'];
+
+			$o = Order::create($data);
+			
+			$counter++;
+		} 
+
+		/*$items = DB::connection('mysql2')
+				->table('mnc_k2store_orderitems as a')		
+				->get();
+
+		foreach($items as $item){
+			$data['id'] = $item->orderitem_id;
+			$data['order_id'] = $item->order_id;
+			$data['product_id'] = $item->product_id;
+			$data['product_name'] = $item->orderitem_name;
+			$data['quantity'] = $item->orderitem_quantity;
+			$data['product_price'] = $item->orderitem_price;
+			$data['subtotal'] = $item->orderitem_final_price;
+			
+
+			$o = OrderItem::create($data);
+			$counter++;
+		}*/
+
+		echo $counter.' orders migrated successfully';
+
+	}
+
+	public function products(){
+
+		/* k2 images md5("Image".$item->id).'_L.jpg'; */
+
 	}
 }

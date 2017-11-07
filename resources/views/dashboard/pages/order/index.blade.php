@@ -38,5 +38,8 @@
 @stop
 
 @section('footer-scripts')
-		<script language="javascript" type="text/javascript" src="{{asset('js/dashboard/orders.js')}}"></script>        
+		<script language="javascript" type="text/javascript" src="{{asset('js/dashboard/orders.js')}}"></script>  
+        <script language="javascript" type="text/javascript">
+            window.dashboard.orders.init();
+        </script>      
 @stop

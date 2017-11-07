@@ -1,4 +1,5 @@
 @extends('dashboard.layout.master')
+
 @section('content')
 					<div class="wrapper">
                         @if ($message = Session::get('success'))
